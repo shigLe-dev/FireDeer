@@ -21,6 +21,7 @@ public class Parser
     {
         argumentParseFunctions = new List<Func<Argument?>>
         {
+            ParseOption,
             ParseInt,
             ParseDecimal,
             ParseString
@@ -76,6 +77,14 @@ public class Parser
     {
         if (float.TryParse(currentArgument, out float result)) return new DecimalArgument(result);
         return null;
+    }
+
+    OptionArgument? ParseOption()
+    {
+        string argumentName = currentArgument;
+        if (!argumentName.StartsWith("--")) return null;
+        Next();
+        return new OptionArgument(argumentName.Substring(2), ParseArgument());
     }
 
     #endregion

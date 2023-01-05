@@ -14,5 +14,12 @@ internal class Program
         {
             Console.WriteLine(argument.GetType().Name);
         }
+
+        Console.WriteLine();
+
+        foreach (var argument in arguments)
+        {
+            Console.WriteLine(argument.literal);
+        }
     }
 }
