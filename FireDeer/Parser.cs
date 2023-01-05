@@ -16,14 +16,6 @@ public class Parser
             else return "";
         }
     }
-    string nextArgument
-    {
-        get
-        {
-            if (arguments.Length > position + 1 && 0 <= position + 1) return arguments[position + 1];
-            else return "";
-        }
-    }
 
     public Parser(string[] arguments)
     {
