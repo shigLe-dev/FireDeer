@@ -5,57 +5,84 @@ namespace FireDeer;
 
 public class Parser
 {
-    List<Func<string, Argument?>> argumentParseFunctions;
-
-    public Parser()
+    List<Func<Argument?>> argumentParseFunctions;
+    string[] arguments;
+    int position;
+    string currentArgument
     {
-        argumentParseFunctions = new List<Func<string, Argument?>>
+        get
+        {
+            if (arguments.Length > position && 0 <= position) return arguments[position];
+            else return "";
+        }
+    }
+    string nextArgument
+    {
+        get
+        {
+            if (arguments.Length > position + 1 && 0 <= position + 1) return arguments[position + 1];
+            else return "";
+        }
+    }
+
+    public Parser(string[] arguments)
+    {
+        argumentParseFunctions = new List<Func<Argument?>>
         {
             ParseInt,
             ParseDecimal,
             ParseString
         };
+        this.arguments = arguments;
     }
 
-    public Argument[] Parse(string[] arguments)
+    public Argument[] Parse()
     {
         List<Argument> ret = new List<Argument>();
 
-        foreach (var argument in arguments)
+        while (true)
         {
-            ret.Add(ParseArgument(argument));
+            if (arguments.Length <= position) break;
+
+            ret.Add(ParseArgument());
+            Next();
         }
 
         return ret.ToArray();
     }
 
-    public Argument ParseArgument(string argument)
+    public Argument ParseArgument()
     {
         foreach (var argumentParseFunction in argumentParseFunctions)
         {
-            var ret = argumentParseFunction(argument);
+            var ret = argumentParseFunction();
             if (ret != null) return ret;
         }
 
-        return new NullArgument(argument);
+        return new NullArgument(currentArgument);
+    }
+
+    void Next()
+    {
+        position++;
     }
 
     #region ArgumentParseFunctions
 
-    IntArgument? ParseInt(string argument)
+    IntArgument? ParseInt()
     {
-        if (int.TryParse(argument, out int result)) return new IntArgument(result);
+        if (int.TryParse(currentArgument, out int result)) return new IntArgument(result);
         return null;
     }
 
-    StringArgument? ParseString(string argument)
+    StringArgument? ParseString()
     {
-        return new StringArgument(argument);
+        return new StringArgument(currentArgument);
     }
 
-    DecimalArgument? ParseDecimal(string argument)
+    DecimalArgument? ParseDecimal()
     {
-        if (float.TryParse(argument, out float result)) return new DecimalArgument(result);
+        if (float.TryParse(currentArgument, out float result)) return new DecimalArgument(result);
         return null;
     }
 

@@ -6,9 +6,9 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        var cliParser = new Parser();
+        var cliParser = new Parser(args);
 
-        var arguments = cliParser.Parse(args);
+        var arguments = cliParser.Parse();
 
         foreach (var argument in arguments)
         {
