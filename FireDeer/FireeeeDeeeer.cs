@@ -9,8 +9,13 @@ public class FireeeeDeeeer
         commands = new List<Command>();
     }
 
-    public bool Run()
+    public bool Run(string[] args)
     {
+        var parser = new Parser(args);
+        var arguments = parser.Parse();
+
+
+
         return false;
     }
 }

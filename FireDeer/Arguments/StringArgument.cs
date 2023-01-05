@@ -1,6 +1,6 @@
 ﻿namespace FireDeer.Arguments;
 
-internal record StringArgument : Argument
+public record StringArgument : Argument
 {
     public readonly string value;
 

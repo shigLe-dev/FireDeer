@@ -1,6 +1,6 @@
 ﻿namespace FireDeer.Arguments;
 
-internal record OptionArgument : Argument
+public record OptionArgument : Argument
 {
     public readonly string argumentName;
     public readonly Argument argument;

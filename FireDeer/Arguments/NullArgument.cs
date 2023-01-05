@@ -1,6 +1,6 @@
 ﻿namespace FireDeer.Arguments;
 
-internal record NullArgument : Argument
+public record NullArgument : Argument
 {
     public NullArgument(string literal)
     {
