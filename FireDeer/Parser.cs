@@ -5,9 +5,6 @@ namespace FireDeer;
 
 public class Parser
 {
-    public ReadOnlyCollection<Command> commands => _commands.AsReadOnly();
-
-    List<Command> _commands = new List<Command>();
     List<Func<string, Argument?>> argumentParseFunctions;
 
     public Parser()

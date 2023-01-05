@@ -1,6 +1,6 @@
 ﻿namespace FireDeer.Arguments;
 
-internal class DecimalArgument : Argument
+internal record DecimalArgument : Argument
 {
     public readonly float value;
 
