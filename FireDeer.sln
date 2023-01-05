@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33209.295
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireDeer", "FireDeer\FireDeer.csproj", "{33C2676B-4010-4669-A00E-52240668B98E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33C2676B-4010-4669-A00E-52240668B98E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33C2676B-4010-4669-A00E-52240668B98E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33C2676B-4010-4669-A00E-52240668B98E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33C2676B-4010-4669-A00E-52240668B98E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B065F842-FEFC-4A21-8CF2-4DE104FFE245}
+	EndGlobalSection
+EndGlobal
