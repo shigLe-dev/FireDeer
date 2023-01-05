@@ -2,8 +2,12 @@
 
 internal class StringArgument : Argument
 {
-    public StringArgument(string literal)
+    public readonly string value;
+
+    public StringArgument(string value)
     {
-        this.literal = literal;
+        this.value = value;
+
+        this.literal = value;
     }
 }

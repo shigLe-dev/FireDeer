@@ -6,7 +6,7 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        var cliParser = new CLIParser();
+        var cliParser = new Parser();
 
         var arguments = cliParser.Parse(args);
 

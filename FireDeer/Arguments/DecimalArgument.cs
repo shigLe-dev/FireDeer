@@ -1,10 +1,10 @@
 ﻿namespace FireDeer.Arguments;
 
-internal class IntArgument : Argument
+internal class DecimalArgument : Argument
 {
-    public readonly int value;
+    public readonly float value;
 
-    public IntArgument(int value)
+    public DecimalArgument(float value)
     {
         this.value = value;
 

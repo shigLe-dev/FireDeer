@@ -3,18 +3,19 @@ using System.Collections.ObjectModel;
 
 namespace FireDeer;
 
-public class CLIParser
+public class Parser
 {
     public ReadOnlyCollection<Command> commands => _commands.AsReadOnly();
 
     List<Command> _commands = new List<Command>();
     List<Func<string, Argument?>> argumentParseFunctions;
 
-    public CLIParser()
+    public Parser()
     {
         argumentParseFunctions = new List<Func<string, Argument?>>
         {
             ParseInt,
+            ParseDecimal,
             ParseString
         };
     }
@@ -53,6 +54,12 @@ public class CLIParser
     StringArgument? ParseString(string argument)
     {
         return new StringArgument(argument);
+    }
+
+    DecimalArgument? ParseDecimal(string argument)
+    {
+        if (float.TryParse(argument, out float result)) return new DecimalArgument(result);
+        return null;
     }
 
     #endregion
