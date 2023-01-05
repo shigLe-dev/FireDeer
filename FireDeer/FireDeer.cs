@@ -14,7 +14,8 @@ public class CLIParser
     {
         argumentParseFunctions = new List<Func<string, Argument?>>
         {
-            ParseInt
+            ParseInt,
+            ParseString
         };
     }
 
@@ -47,6 +48,11 @@ public class CLIParser
     {
         if (int.TryParse(argument, out int result)) return new IntArgument(result);
         return null;
+    }
+
+    StringArgument? ParseString(string argument)
+    {
+        return new StringArgument(argument);
     }
 
     #endregion
