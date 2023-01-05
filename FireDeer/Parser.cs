@@ -21,7 +21,6 @@ public class Parser
     {
         argumentParseFunctions = new List<Func<Argument?>>
         {
-            ParseOption,
             ParseInt,
             ParseDecimal,
             ParseString
@@ -29,19 +28,22 @@ public class Parser
         this.arguments = arguments;
     }
 
-    public Argument[] Parse()
+    public (Argument[] arguments, Dictionary<string, Argument> optionArguments) Parse()
     {
-        List<Argument> ret = new List<Argument>();
+        var retlist = new List<Argument>();
+        var retdic = new Dictionary<string, Argument>();
 
         while (true)
         {
             if (arguments.Length <= position) break;
 
-            ret.Add(ParseArgument());
+            if (ParseOption(out string name, out Argument arg)) retdic[name] = arg;
+            else retlist.Add(ParseArgument());
+
             Next();
         }
 
-        return ret.ToArray();
+        return (retlist.ToArray(), retdic);
     }
 
     public Argument ParseArgument()
@@ -79,13 +81,18 @@ public class Parser
         return null;
     }
 
-    OptionArgument? ParseOption()
-    {
-        string argumentName = currentArgument;
-        if (!argumentName.StartsWith("--")) return null;
-        Next();
-        return new OptionArgument(argumentName.Substring(2), ParseArgument());
-    }
-
     #endregion
+
+    bool ParseOption(out string name, out Argument arg)
+    {
+        name = "";
+        arg = new NullArgument("");
+
+        string argumentName = currentArgument;
+        if (!argumentName.StartsWith("--")) return false;
+        Next();
+        name = argumentName.Substring(2);
+        arg = ParseArgument();
+        return true;
+    }
 }
