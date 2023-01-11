@@ -1,4 +1,6 @@
-﻿namespace FireDeer;
+﻿using FireDeer.Arguments;
+
+namespace FireDeer;
 
 public class FireeeeDeeeer
 {
@@ -6,7 +8,7 @@ public class FireeeeDeeeer
     List<Command> commands;
     List<Func<Queue<string>, IArgument?>> argumentParseFunctions = new List<Func<Queue<string>, IArgument?>>()
     {
-
+        StringArgument.Parse
     };
 
     public FireeeeDeeeer(string[] rawArgs, Command[] commands)
@@ -20,18 +22,22 @@ public class FireeeeDeeeer
         List<IArgument> ret = new List<IArgument>(rawArgs.Length);
         Queue<string> rawArgsQueue = new Queue<string>(rawArgs);
 
-        foreach (var argumentParseFunction in argumentParseFunctions)
+        while (rawArgsQueue.TryPeek(out string? result))
         {
-            // パースする
-            IArgument? parsedArg = argumentParseFunction(rawArgsQueue);
-
-            // nullならパースできてないので次に行く
-            if (parsedArg == null) continue;
-
-            // 返り値に追加
-            ret.Add(parsedArg);
+            IArgument? parsedArg = ParseArgument(rawArgsQueue);
+            if (parsedArg != null) ret.Add(parsedArg);
         }
 
         return ret.ToArray();
+    }
+
+    IArgument? ParseArgument(Queue<string> rawArgsQueue)
+    {
+        foreach (var argumentParseFunction in argumentParseFunctions)
+        {
+            return argumentParseFunction(rawArgsQueue);
+        }
+
+        return null;
     }
 }
