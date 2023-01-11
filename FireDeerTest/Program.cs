@@ -10,6 +10,7 @@ internal class Program
         FireeeeDeeeer fireeeeDeeeer = new FireeeeDeeeer(args,
             new CommandBuilder()
             .AddRequire(new StringArgumentRequire())
+            .AddRequire(new IdentifierArgumentRequire("foo"))
             .SetAction(args => { foreach (var arg in args) Console.WriteLine(arg.GetType().Name); })
             .Build()
         );
