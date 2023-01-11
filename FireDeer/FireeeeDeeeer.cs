@@ -2,20 +2,12 @@
 
 public class FireeeeDeeeer
 {
-    public List<Command> commands;
+    Parser parser;
 
-    public FireeeeDeeeer()
+    public FireeeeDeeeer(string[] rawArgs)
     {
-        commands = new List<Command>();
+        parser = new Parser(rawArgs);
     }
 
-    public bool Run(string[] args)
-    {
-        var parser = new Parser(args);
-        var arguments = parser.Parse();
 
-
-
-        return false;
-    }
 }
