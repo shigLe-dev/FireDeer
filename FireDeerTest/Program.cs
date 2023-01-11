@@ -22,12 +22,12 @@ internal class Program
             )
         });*/
 
-        FireeeeDeeeer fireeeeDeeeer = new FireeeeDeeeer(args, new Command[]{
+        FireeeeDeeeer fireeeeDeeeer = new FireeeeDeeeer(args,
             new CommandBuilder()
-                .AddRequire(new StringArgumentRequire())
-                .SetAction(args => {foreach (var arg in args) Console.WriteLine(arg.GetType().Name);})
-                .Build()
-        });
+            .AddRequire(new StringArgumentRequire())
+            .SetAction(args => { foreach (var arg in args) Console.WriteLine(arg.GetType().Name); })
+            .Build()
+        );
 
         if (fireeeeDeeeer.Run()) Console.WriteLine("成功");
         else Console.WriteLine("失敗");
