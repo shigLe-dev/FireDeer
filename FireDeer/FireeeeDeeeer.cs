@@ -1,6 +1,4 @@
-﻿using FireDeer.Arguments;
-
-namespace FireDeer;
+﻿namespace FireDeer;
 
 public class FireeeeDeeeer
 {
@@ -13,8 +11,13 @@ public class FireeeeDeeeer
         this.commands = commands.ToList();
     }
 
-    public IArgument[] Parse()
+    public bool Run()
     {
+        foreach (var command in commands)
+        {
+            if (command.TryRun(rawArgs)) return true;
+        }
 
+        return false;
     }
 }

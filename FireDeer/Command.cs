@@ -11,18 +11,30 @@ public class Command
         this.action = action;
     }
 
-    public bool Run(IArgument[] args)
+    public bool TryRun(string[] rawArgs)
     {
-        bool ret = true;
+        Queue<string> rawArgsQueue = new Queue<string>(rawArgs);
+        List<IArgument> args = new List<IArgument>();
 
-        Queue<IArgument> argsQueue = new Queue<IArgument>(args);
+        // 全ての条件を満たしているか
+        foreach (var require in requiries)
+        {
+            bool parseSucess = require.TryParse(rawArgsQueue, out IArgument? result);
 
-        //全ての条件を満たしているか
-        foreach (var require in requiries) ret &= require.Match(argsQueue);
+            // パースに失敗しているなら条件確認を中断して返す
+            if (!parseSucess) return false;
+            if (result == null) return false;
+
+            // argsに追加
+            args.Add(result);
+        }
+
+        // queueにあまりがないか
+        if (rawArgsQueue.Count != 0) return false;
 
         // 全ての条件を満たしているなら実行
-        if (ret) action.Invoke(args);
+        action.Invoke(args.ToArray());
 
-        return ret;
+        return true;
     }
 }
