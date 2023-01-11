@@ -1,8 +1,9 @@
 using FireDeer.Arguments;
+using System.Numerics;
 
 namespace FireDeer.Requiries;
 
-public class StringArgumentRequire : Require
+public class IntegerArgumentRequire : Require
 {
     public override bool TryParse(Queue<string> rawArgs, out IArgument? result)
     {
@@ -10,7 +11,8 @@ public class StringArgumentRequire : Require
 
         if (rawArgs.TryDequeue(out string? rawArg) && rawArg != null)
         {
-            result = new StringArgument(rawArg);
+            if (!BigInteger.TryParse(rawArg, out BigInteger intresult)) return false;
+            result = new IntegerArgument(intresult);
             return true;
         }
 

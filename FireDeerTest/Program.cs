@@ -9,10 +9,11 @@ internal class Program
     {
         FireeeeDeeeer fireeeeDeeeer = new FireeeeDeeeer(args,
             new CommandBuilder()
-            .AddRequire(new StringArgumentRequire())
-            .AddRequire(new IdentifierArgumentRequire("foo"))
-            .SetAction(args => { foreach (var arg in args) Console.WriteLine(arg.GetType().Name); })
-            .Build()
+                .AddRequire(new StringArgumentRequire())
+                .AddRequire(new IdentifierArgumentRequire("foo"))
+                .AddRequire(new IntegerArgumentRequire())
+                .SetAction(args => { foreach (var arg in args) Console.WriteLine(arg.GetType().Name); })
+                .Build()
         );
 
         if (fireeeeDeeeer.Run()) Console.WriteLine("成功");

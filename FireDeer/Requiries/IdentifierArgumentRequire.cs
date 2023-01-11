@@ -4,7 +4,7 @@ namespace FireDeer.Requiries;
 
 public class IdentifierArgumentRequire : Require
 {
-    public string identifierName;
+    public readonly string identifierName;
 
     public IdentifierArgumentRequire(string identifierName)
     {
