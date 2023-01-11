@@ -8,6 +8,4 @@ public class FireeeeDeeeer
     {
         parser = new Parser(rawArgs);
     }
-
-
 }
