@@ -7,7 +7,7 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        FireeeeDeeeer fireeeeDeeeer = new FireeeeDeeeer(args,
+        FireeeeDeeeer fireeeeDeeeer = new FireeeeDeeeer(args, "firedeerのテスト用コマンド", true,
             new CommandBuilder()
                 .AddRequire(new StringArgumentRequire())
                 .AddRequire(new IdentifierArgumentRequire("foo"))

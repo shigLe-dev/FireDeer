@@ -4,6 +4,7 @@ public class Command
 {
     Require[] requiries;
     Action<IArgument[]> action;
+    public string RequireDescription => string.Join(" ", requiries.Select(r => { return r.description; }));
 
     public Command(Require[] requiries, Action<IArgument[]> action)
     {

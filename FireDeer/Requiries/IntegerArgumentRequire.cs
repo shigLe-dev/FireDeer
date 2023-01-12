@@ -5,6 +5,8 @@ namespace FireDeer.Requiries;
 
 public class IntegerArgumentRequire : Require
 {
+    public override string description => "<integer>";
+
     public override bool TryParse(Queue<string> rawArgs, out IArgument? result)
     {
         result = null;

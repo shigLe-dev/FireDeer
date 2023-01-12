@@ -4,6 +4,8 @@ namespace FireDeer.Requiries;
 
 public class StringArgumentRequire : Require
 {
+    public override string description => "<string>";
+
     public override bool TryParse(Queue<string> rawArgs, out IArgument? result)
     {
         result = null;

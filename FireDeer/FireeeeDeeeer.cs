@@ -1,14 +1,21 @@
-﻿namespace FireDeer;
+﻿using FireDeer.Requiries;
+using System.Text;
+
+namespace FireDeer;
 
 public class FireeeeDeeeer
 {
-    string[] rawArgs;
-    List<Command> commands;
+    readonly string[] rawArgs;
+    readonly List<Command> commands;
+    readonly string commandDescription;
 
-    public FireeeeDeeeer(string[] rawArgs, params Command[] commands)
+    public FireeeeDeeeer(string[] rawArgs, string commandDescription, bool addHelp, params Command[] commands)
     {
         this.rawArgs = rawArgs;
         this.commands = commands.ToList();
+        this.commandDescription = commandDescription;
+
+        if (addHelp) AddHelpCommand();
     }
 
     public bool Run()
@@ -19,5 +26,26 @@ public class FireeeeDeeeer
         }
 
         return false;
+    }
+
+    public void AddHelpCommand()
+    {
+        this.commands.Add(new CommandBuilder()
+            .AddRequire(new IdentifierArgumentRequire("help"))
+            .SetAction(args =>
+            {
+                StringBuilder builder = new StringBuilder();
+
+                builder.AppendLine(commandDescription);
+                builder.AppendLine();
+                builder.AppendLine("The commands are:");
+                foreach (var command in commands)
+                {
+                    builder.AppendLine("        " + command.RequireDescription);
+                }
+
+                Console.WriteLine(builder.ToString());
+            })
+            .Build());
     }
 }
