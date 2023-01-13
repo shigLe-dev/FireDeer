@@ -7,8 +7,8 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        Command command = Command.CreateBaseCommand("testCommand",
-            Command.CreateCommand("hoge",
+        ICommand command = new BaseCommand("testCommand",
+            new ActionCommand("hoge",
                 new Require[]
                 {
                     new RequireInteger(),
@@ -20,7 +20,7 @@ internal class Program
                 }
             )
         );
-        if (command.Run(args)) Console.WriteLine("Success");
+        if (command.Run(new Queue<string>(args))) Console.WriteLine("Success");
         else Console.WriteLine("Failure");
     }
 }
