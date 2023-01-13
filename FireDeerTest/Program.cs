@@ -10,7 +10,7 @@ internal class Program
     {
         ICommand command = new BaseCommandBuilder("testCommand")
             .AddSubCommand(
-                new ActionCommandBuilder("hoge2")
+                new ActionCommandBuilder("hoge")
                     .AddRequire(new RequireInteger())
                     .AddRequire(new RequireInteger())
                     .SetAction(args =>

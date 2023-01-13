@@ -17,12 +17,22 @@ public class BaseCommand : ICommand
         // subCommandにあるか
         foreach (var subCommand in subCommands)
         {
+            if (!rawArgsQueue.TryPeek(out string? rawArg)) continue;
+            if (rawArg == null) continue;
+            if (rawArg != subCommand.name) continue;
+
+            Queue<string> subCommandRawArgs = new Queue<string>(rawArgsQueue);
+            subCommandRawArgs.Dequeue();
+            if (subCommand.Run(subCommandRawArgs)) return true;
+        }
+
+        foreach (var subCommand in subCommands)
+        {
             if (rawArgsQueue.TryPeek(out string? rawArg) && rawArg != null && rawArg == subCommand.name)
             {
                 rawArgsQueue.Dequeue();
                 if (subCommand.Run(rawArgsQueue)) return true;
             }
-            else continue;
         }
 
         return false;
