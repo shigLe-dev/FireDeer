@@ -19,21 +19,16 @@ public class Command
 
     public bool Run(string[] rawArgs)
     {
-        return Run(this, rawArgs);
-    }
-
-    public static bool Run(Command command, string[] rawArgs)
-    {
         Queue<string> rawArgsQueue = new Queue<string>(rawArgs);
         List<IArgument> args = new List<IArgument>();
 
-        foreach (var require in command.requiries)
+        foreach (var require in requiries)
         {
             if (!require.TryParse(rawArgsQueue, out IArgument arg)) return false;
             else args.Add(arg);
         }
 
-        command.action.Invoke(args.ToArray());
+        action.Invoke(args.ToArray());
 
         return true;
     }
