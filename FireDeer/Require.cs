@@ -2,6 +2,5 @@ namespace FireDeer;
 
 public abstract class Require
 {
-    public abstract string description { get; }
-    public abstract bool TryParse(Queue<string> rawArgs, out IArgument? result);
+    public abstract bool TryParse(Queue<string> rawArgs, out IArgument arg);
 }
