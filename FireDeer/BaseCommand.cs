@@ -4,9 +4,9 @@ public class BaseCommand : ICommand
 {
     public string name { get; set; }
 
-    readonly ActionCommand[] subCommands;
+    readonly ICommand[] subCommands;
 
-    public BaseCommand(string name, params ActionCommand[] subCommands)
+    public BaseCommand(string name, params ICommand[] subCommands)
     {
         this.name = name;
         this.subCommands = subCommands;

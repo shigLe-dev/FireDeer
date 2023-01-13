@@ -35,8 +35,8 @@ public class ActionCommandBuilder
         return this;
     }
 
-    public static implicit operator ActionCommand(ActionCommandBuilder actionCommandBuilder)
+    public ICommand Build()
     {
-        return new ActionCommand(actionCommandBuilder.name, actionCommandBuilder.requiries.ToArray(), actionCommandBuilder.action);
+        return new ActionCommand(name, requiries.ToArray(), action);
     }
 }
