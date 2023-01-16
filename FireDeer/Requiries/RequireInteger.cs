@@ -5,6 +5,7 @@ namespace FireDeer.Requiries;
 
 public class RequireInteger : Require
 {
+    public override string name => "<Integer>";
     public override bool TryParse(Queue<string> rawArgs, out IArgument arg)
     {
         arg = new ErrorArgument();

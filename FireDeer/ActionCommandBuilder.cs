@@ -35,7 +35,7 @@ public class ActionCommandBuilder
         return this;
     }
 
-    public ICommand Build()
+    public Command Build()
     {
         return new ActionCommand(name, requiries.ToArray(), action);
     }

@@ -8,7 +8,30 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        ICommand command = new BaseCommandBuilder("testCommand")
+        Command command = new BaseCommandBuilder("testCommand")
+            .SetAction(baseCommand =>
+            {
+                Console.WriteLine(hoge(baseCommand));
+
+                string hoge(Command command)
+                {
+                    string ret = "";
+
+                    switch (command)
+                    {
+                        case BaseCommand baseCmd:
+                            foreach (var subCommand in baseCmd.subCommands)
+                            {
+                                ret += hoge(subCommand);
+                            }
+                            break;
+                        case ActionCommand actionCmd:
+                            return actionCmd.name + " " + string.Join(" ", actionCmd.requiries.Select(r => r.name)) + "\n";
+                    }
+
+                    return ret;
+                }
+            })
             .AddSubCommand(
                 new ActionCommandBuilder("hoge")
                     .AddRequire(new RequireInteger())

@@ -1,24 +1,28 @@
+using System.Collections.ObjectModel;
+
 namespace FireDeer;
 
-public class ActionCommand : ICommand
+public class ActionCommand : Command
 {
-    public string name { get; set; }
-    readonly Require[] requiries;
-    event Action<IArgument[]> action;
+    public ReadOnlyCollection<Require> requiries => _requiries.AsReadOnly();
+    public Action<IArgument[]> action => _action;
+
+    readonly Require[] _requiries;
+    event Action<IArgument[]> _action;
 
     public ActionCommand(string name, Require[] requiries, Action<IArgument[]> action)
     {
         this.name = name;
-        this.requiries = requiries;
-        this.action = action;
+        this._requiries = requiries;
+        this._action = action;
     }
 
-    public bool Run(Queue<string> rawArgsQueue)
+    public override bool Run(Queue<string> rawArgsQueue)
     {
         // 引数が正しいか
         List<IArgument> args = new List<IArgument>();
 
-        foreach (var require in requiries)
+        foreach (var require in _requiries)
         {
             if (!require.TryParse(rawArgsQueue, out IArgument arg)) return false;
             else args.Add(arg);
@@ -27,7 +31,7 @@ public class ActionCommand : ICommand
         // 数は余ってないか
         if (rawArgsQueue.Count != 0) return false;
 
-        action.Invoke(args.ToArray());
+        _action.Invoke(args.ToArray());
 
         return true;
     }

@@ -3,12 +3,13 @@ namespace FireDeer;
 public class BaseCommandBuilder
 {
     string name;
-    List<ICommand> subCommands;
+    List<Command> subCommands;
+    Action<BaseCommand>? action;
 
     public BaseCommandBuilder(string name)
     {
         this.name = name;
-        subCommands = new List<ICommand>();
+        subCommands = new List<Command>();
     }
 
     public BaseCommandBuilder SetName(string name)
@@ -17,14 +18,26 @@ public class BaseCommandBuilder
         return this;
     }
 
-    public BaseCommandBuilder AddSubCommand(ICommand subCommand)
+    public BaseCommandBuilder AddSubCommand(Command subCommand)
     {
         this.subCommands.Add(subCommand);
         return this;
     }
 
-    public ICommand Build()
+    public BaseCommandBuilder SetAction(Action<BaseCommand> action)
     {
-        return new BaseCommand(name, subCommands.ToArray());
+        this.action = action;
+        return this;
+    }
+
+    public BaseCommandBuilder AddAction(Action<BaseCommand> action)
+    {
+        this.action += action;
+        return this;
+    }
+
+    public Command Build()
+    {
+        return new BaseCommand(name, subCommands.ToArray(), action);
     }
 }
