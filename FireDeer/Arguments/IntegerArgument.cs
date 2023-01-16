@@ -4,10 +4,10 @@ namespace FireDeer.Arguments;
 
 public class IntegerArgument : IArgument
 {
-    public readonly BigInteger literal;
+    public readonly BigInteger bigInteger;
 
-    public IntegerArgument(BigInteger literal)
+    public IntegerArgument(BigInteger bigInteger)
     {
-        this.literal = literal;
+        this.bigInteger = bigInteger;
     }
 }

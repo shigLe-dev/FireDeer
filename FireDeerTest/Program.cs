@@ -1,5 +1,6 @@
 ﻿using FireDeer;
 using FireDeer.Requiries;
+using FireDeer.Arguments;
 
 namespace FireDeerTest;
 
@@ -7,16 +8,58 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        FireeeeDeeeer fireeeeDeeeer = new FireeeeDeeeer(args, "firedeerのテスト用コマンド", true,
-            new CommandBuilder()
-                .AddRequire(new StringArgumentRequire())
-                .AddRequire(new IdentifierArgumentRequire("foo"))
-                .AddRequire(new IntegerArgumentRequire())
-                .SetAction(args => { foreach (var arg in args) Console.WriteLine(arg.GetType().Name); })
-                .Build()
-        );
+        Command command = new BaseCommandBuilder("testCommand")
+            .SetAction(baseCommand =>
+            {
+                Console.WriteLine(hoge(baseCommand));
 
-        if (fireeeeDeeeer.Run()) Console.WriteLine("成功");
-        else Console.WriteLine("失敗");
+                string hoge(Command command)
+                {
+                    string ret = "";
+
+                    switch (command)
+                    {
+                        case BaseCommand baseCmd:
+                            foreach (var subCommand in baseCmd.subCommands)
+                            {
+                                ret += hoge(subCommand);
+                            }
+                            break;
+                        case ActionCommand actionCmd:
+                            return actionCmd.name + " " + string.Join(" ", actionCmd.requiries.Select(r => r.name)) + "\n";
+                    }
+
+                    return ret;
+                }
+            })
+            .AddSubCommand(
+                new ActionCommandBuilder("hoge")
+                    .AddRequire(new RequireInteger())
+                    .AddRequire(new RequireInteger())
+                    .SetAction(args =>
+                    {
+                        IntegerArgument integerArgument1 = (IntegerArgument)args[0];
+                        IntegerArgument integerArgument2 = (IntegerArgument)args[1];
+
+                        Console.WriteLine(integerArgument1.bigInteger);
+                        Console.WriteLine(integerArgument2.bigInteger);
+                    })
+                    .Build()
+            )
+            .AddSubCommand(
+                new ActionCommandBuilder("hoge")
+                    .AddRequire(new RequireInteger())
+                    .SetAction(args =>
+                    {
+                        IntegerArgument value = (IntegerArgument)args[0];
+
+                        Console.WriteLine(value.bigInteger);
+                    })
+                    .Build()
+            )
+            .Build();
+
+        if (command.Run(new Queue<string>(args))) Console.WriteLine("Success");
+        else Console.WriteLine("Failure");
     }
 }
