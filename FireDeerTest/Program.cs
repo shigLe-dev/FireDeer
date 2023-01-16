@@ -20,7 +20,7 @@ internal class Program
                         case BaseCommand baseCmd:
                             return string.Join('\n', baseCmd.subCommands.ToList().Select(s => hoge(s)));
                         case ActionCommand actionCmd:
-                            return $"{actionCmd.name} {string.Join(" ", actionCmd.requiries.Select(r => r.name))}";
+                            return $"{actionCmd.fullName} {string.Join(" ", actionCmd.requiries.Select(r => r.name))}";
                         default:
                             return "";
                     }

@@ -15,6 +15,8 @@ public class BaseCommand : Command
         this.name = name;
         this._subCommands = subCommands;
         this._action = action;
+
+        foreach (var subCommand in _subCommands) subCommand.parent = this;
     }
 
     public override bool Run(Queue<string> rawArgsQueue)
