@@ -15,21 +15,15 @@ internal class Program
 
                 string hoge(Command command)
                 {
-                    string ret = "";
-
                     switch (command)
                     {
                         case BaseCommand baseCmd:
-                            foreach (var subCommand in baseCmd.subCommands)
-                            {
-                                ret += hoge(subCommand);
-                            }
-                            break;
+                            return string.Join('\n', baseCmd.subCommands.ToList().Select(s => hoge(s)));
                         case ActionCommand actionCmd:
-                            return actionCmd.name + " " + string.Join(" ", actionCmd.requiries.Select(r => r.name)) + "\n";
+                            return actionCmd.name + " " + string.Join(" ", actionCmd.requiries.Select(r => r.name));
+                        default:
+                            return "";
                     }
-
-                    return ret;
                 }
             })
             .AddSubCommand(
